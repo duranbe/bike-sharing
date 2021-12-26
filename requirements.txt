@@ -1,4 +1,4 @@
 fastapi
 jinja2
 uvicorn
-pymongo
+pymongo[snappy,gssapi,srv,tls]
