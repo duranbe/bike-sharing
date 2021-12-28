@@ -7,7 +7,7 @@ from fastapi.encoders import jsonable_encoder
 from datetime import datetime
 from bson.json_util import dumps, loads
 import motor.motor_asyncio
-  
+
 import pymongo
 import os
 
@@ -26,6 +26,7 @@ client = motor.motor_asyncio.AsyncIOMotorClient(
 
 db = client[db_name]
 
+
 @app.get("/", response_class=HTMLResponse)
 async def main(request: Request):
     """
@@ -37,29 +38,27 @@ async def main(request: Request):
 
 @app.get("/trips")
 async def get_trips_between(startDate: datetime, endDate: datetime):
- 
+
     data = await db['trips'].aggregate([
         {"$match":
             {"starttime":
-            {"$gte": startDate,
-             "$lt": endDate
+             {"$gte": startDate,
+              "$lt": endDate
+              }
              }
-            }
          },
-         {"$group":
-             { 
-                 "_id": "$starttime",
-                 "count":{ "$sum":1}
-             }
-        },
-        {"$sort": 
+        {"$group":
+         {
+             "_id": "$starttime",
+             "count": {"$sum": 1}
+         }
+         },
+        {"$sort":
             {
-            "_id":1
+                "_id": 1
             }
-        }
-         
-    ]).to_list(length=None)
-    
+         }
 
-    
+    ]).to_list(length=None)
+
     return data
