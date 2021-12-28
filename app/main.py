@@ -6,6 +6,7 @@ from fastapi.templating import Jinja2Templates
 from fastapi.encoders import jsonable_encoder
 from datetime import datetime
 from bson.json_util import dumps, loads
+import motor.motor_asyncio
   
 import pymongo
 import os
@@ -20,11 +21,10 @@ db_name = os.environ['db_name']
 db_password = os.environ['db_password']
 db_cluster = os.environ['db_cluster']
 
-client = pymongo.MongoClient(
+client = motor.motor_asyncio.AsyncIOMotorClient(
     f"mongodb+srv://{db_user}:{db_password}@{db_cluster}/{db_name}?retryWrites=true&w=majority")
 
 db = client[db_name]
-
 
 @app.get("/", response_class=HTMLResponse)
 async def main(request: Request):
@@ -38,7 +38,7 @@ async def main(request: Request):
 @app.get("/trips")
 async def get_trips_between(startDate: datetime, endDate: datetime):
  
-    data = db['trips'].aggregate([
+    data = await db['trips'].aggregate([
         {"$match":
             {"starttime":
             {"$gte": startDate,
@@ -51,13 +51,15 @@ async def get_trips_between(startDate: datetime, endDate: datetime):
                  "_id": "$starttime",
                  "count":{ "$sum":1}
              }
-         }
+        },
+        {"$sort": 
+            {
+            "_id":1
+            }
+        }
          
-    ])
-    list_cur = list(data)
-  
-    # Converting to the JSON
-    json_data = dumps(list_cur) 
+    ]).to_list(length=None)
+    
 
     
-    return JSONResponse(content=json_data)
+    return data
