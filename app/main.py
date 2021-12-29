@@ -48,8 +48,8 @@ async def get_trips_between(startDate: datetime, endDate: datetime):
              }
          },
         {"$group":
-         {
-             "_id": "$starttime",
+        {
+             "_id": {"$dateToString": {"format": "%Y-%m-%d", "date": "$starttime"}},
              "count": {"$sum": 1}
          }
          },

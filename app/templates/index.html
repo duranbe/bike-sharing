@@ -26,7 +26,10 @@
       <div class="card shadow" style="width: 18rem;">
       <div class="card-body">
         <h5 class="card-title">Card title</h5>
-        <canvas id="myChart" width="400" height="400"></canvas>
+        <div id="test">
+          <canvas id="myChart" width="800" height="600"></canvas>
+        </div>
+        
       </div>
     </div>
     </div>
@@ -76,41 +79,54 @@ nav {
 </style>
 
 <script>
-const ctx = document.getElementById('myChart').getContext('2d');
-const myChart = new Chart(ctx, {
-    type: 'bar',
-    data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-        datasets: [{
-            label: '# of Votes',
-            data: [12, 19, 3, 5, 2, 3],
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)'
-            ],
-            borderColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
-            ],
-            borderWidth: 1
-        }]
+function createViewChart(canva_name,data,container_name){
+var ctx = document.getElementById(canva_name);
+var color = '#f0953c'
+var myLineChart = new Chart(ctx, {
+type: 'line',
+data: {
+    labels: data['labels'],
+    datasets: [
+        {
+            label: "Views",
+            data: data['values'],
+            lineTension: 0.4,
+            backgroundColor: HexToRGB(color,0), //Area
+            borderColor: color, //line
+            borderWidth: 2,
+            pointRadius: 3.5,
+            pointBackgroundColor: 'white', //Point
+            pointBorderColor: color,
+            pointHoverRadius: 4,
+            pointHoverBackgroundColor: color,
+            pointHoverBorderColor: color,
+            pointHitRadius: 15,
+        },
+        
+    ]
+},
+options: {
+    
+
+    tooltips: {
+        backgroundColor: "rgb(255,255,255)",
+        bodyFontColor: "#858796",
+        titleMarginBottom: 10,
+        titleFontColor: "#6e707e",
+        titleFontSize: 14,
+        borderColor: "#dddfeb",
+        borderWidth: 0.7,
+        xPadding: 15,
+        yPadding: 15,
+        displayColors: false,
+        intersect: false,
+        mode: "index",
+        caretPadding: 10,   
     },
-    options: {
-        scales: {
-            y: {
-                beginAtZero: true
-            }
-        }
-    }
+}
 });
+
+}
 
 // Make a request for a user with a given ID
 axios.get('/trips',
@@ -119,8 +135,17 @@ axios.get('/trips',
     endDate: "2015-11-14 13:48:00"}
 } )
   .then(function (response) {
-    // handle success
-    console.log(response);
+    
+    var data = {
+      "labels" : [],
+      "values": []
+    }
+    response['data'].forEach(element => {
+        data['labels'].push(element['_id'])
+        data['values'].push(element['count'])
+    });
+    console.log(data)
+    createViewChart('myChart',data,'test')
   })
   .catch(function (error) {
     // handle error
@@ -129,6 +154,18 @@ axios.get('/trips',
   .then(function () {
     // always executed
   });
+
+  function HexToRGB(hex_color,trnsprnc){
+
+	  var myRegexp = /#+([a-zA-Z0-9]{2})+([a-zA-Z0-9]{2})+([a-zA-Z0-9]{2})/gm;
+	  var m = myRegexp.exec(hex_color);
+	  var r = parseInt(m[1],16);
+	  var g = parseInt(m[2],16);
+	  var b = parseInt(m[3],16);
+	  
+	  return( "rgb("+r+","+ g+","+b+","+trnsprnc+")")
+
+	}
 
 
 </script>
