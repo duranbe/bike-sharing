@@ -109,7 +109,7 @@
 </style>
 
 <script>
-  function createViewChart(canva_name, data, container_name) {
+  function createViewChart(canva_name, data) {
     var ctx = document.getElementById(canva_name);
     var color = "#4E9F3D";
     var myLineChart = new Chart(ctx, {
@@ -188,33 +188,36 @@
     });
   }
 
-  // Make a request for a user with a given ID
-  axios
-    .get("/trips", {
-      params: {
-        startDate: "2015-10-13 00:00:00",
-        endDate: "2015-11-14 00:00:00",
-      },
-    })
-    .then(function (response) {
-      var data = {
-        labels: [],
-        values: [],
-      };
-      response["data"].forEach((element) => {
-        data["labels"].push(element["_id"]);
-        data["values"].push(element["count"]);
+  function getTripsCount(inputStartDate,inputEndDate,canvasName){
+     axios
+      .get("/trips", {
+        params: {
+          startDate: inputStartDate,
+          endDate: inputEndDate,
+        },
+      })
+      .then(function (response) {
+        var data = {
+          labels: [],
+          values: [],
+        };
+        response["data"].forEach((element) => {
+          data["labels"].push(element["_id"]);
+          data["values"].push(element["count"]);
+        });
+        console.log(data);
+        document.getElementById("test").innerHTML = `<canvas id="myChart" width="600" height="300"></canvas>`
+        createViewChart(canvasName, data);
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(error);
+      })
+      .then(function () {
+        // always executed
       });
-      console.log(data);
-      createViewChart("myChart", data, "test");
-    })
-    .catch(function (error) {
-      // handle error
-      console.log(error);
-    })
-    .then(function () {
-      // always executed
-    });
+
+  }
 
   function HexToRGB(hex_color, trnsprnc) {
     var myRegexp = /#+([a-zA-Z0-9]{2})+([a-zA-Z0-9]{2})+([a-zA-Z0-9]{2})/gm;
@@ -232,7 +235,7 @@
     var end_date = document.getElementById("endDate").value
     const regex = /\d{4}-\d{2}-\d{2}/;
     if(regex.test(start_date) && regex.test(end_date)){
-      console.log("good")
+      getTripsCount(start_date.concat(" ","00:00:00"),end_date.concat(" ","00:00:00"),"myChart")
     }else{
       console.log("not good")
     }
