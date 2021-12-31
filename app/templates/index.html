@@ -38,27 +38,45 @@
 
     <div class="container mt-4">
       <div class="row justify-content-center">
-        <div class="col-5">
+        <div class="col-6">
           <div class="card shadow">
             <div class="card-body">
-              <h5 class="card-title">Trips by day 📆</h5>
+              <h3 class="card-title">Trips by day 📆</h3>
               <h6 class="card-subtitle mb-2 text-muted">Count of trips</h6>
               <div id="test" class="mt-2">
                 <canvas id="myChart" width="600" height="300"></canvas>
               </div>
-              <div class="input-group mt-3 ">
+              <div class="input-group mt-3">
                 <div class="row my-3">
                   <div class="col-4">
-                    <input id="startDate" type="text" class="form-control" placeholder="Start" aria-label="Username" aria-describedby="basic-addon1">
+                    <input
+                      id="startDate"
+                      type="text"
+                      class="form-control"
+                      placeholder="Start"
+                      aria-label="Username"
+                      aria-describedby="basic-addon1"
+                    />
                   </div>
                   <div class="col-4">
-                    <input id="endDate" type="text" class="form-control" placeholder="End" aria-label="Username" aria-describedby="basic-addon1">
+                    <input
+                      id="endDate"
+                      type="text"
+                      class="form-control"
+                      placeholder="End"
+                      aria-label="Username"
+                      aria-describedby="basic-addon1"
+                    />
                   </div>
                   <div class="col-3">
-                    <button class="btn btn-primary" style="background-color: #189078; font-style: italic;" id="date-btn">Search</button>
-                    
+                    <button
+                      class="btn btn-primary"
+                      style="background-color: #189078; font-style: italic"
+                      id="date-btn"
+                    >
+                      Search
+                    </button>
                   </div>
-
                 </div>
               </div>
             </div>
@@ -68,28 +86,14 @@
         <div class="col-4">
           <div class="card shadow">
             <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+              <h3 class="card-title">Statistics ⏱</h3>
+              
               <p class="card-text">
-                Some quick example text to build on the card title and make up
-                the bulk of the card's content.
+                <div id="statsCard">
+
+                </div>
               </p>
-              <a href="#" class="card-link">Card link</a>
-              <a href="#" class="card-link">Another link</a>
-            </div>
-          </div>
-        </div>
-        <div class="col-3">
-          <div class="card shadow">
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-              <p class="card-text">
-                Some quick example text to build on the card title and make up
-                the bulk of the card's content.
-              </p>
-              <a href="#" class="card-link">Card link</a>
-              <a href="#" class="card-link">Another link</a>
+              
             </div>
           </div>
         </div>
@@ -104,7 +108,7 @@
   }
 
   nav {
-    background-color: #4E9F3D;
+    background-color: #4e9f3d;
   }
 </style>
 
@@ -141,20 +145,16 @@
               display: true,
             },
             ticks: {
-          // For a category axis, the val is the index so the lookup via getLabelForValue is needed
-          callback: function(val, index) {
-            // Hide the label of every 2nd dataset
-            return index % 2 === 0 ? this.getLabelForValue(val) : '';
-            
-          },
-          
-          maxRotation: 0,
-          minRotation: 0,
-          color: "black",
-          
-        }
-            
-            
+              // For a category axis, the val is the index so the lookup via getLabelForValue is needed
+              callback: function (val, index) {
+                // Hide the label of every 2nd dataset
+                return index % 2 === 0 ? this.getLabelForValue(val) : "";
+              },
+              maxTicksLimit: 10,
+              maxRotation: 0,
+              minRotation: 0,
+              color: "black",
+            },
           },
 
           y: {
@@ -162,10 +162,9 @@
               display: true,
             },
             ticks: {
-                      maxTicksLimit: 10,
-                      padding: 1,
-                      
-                    },
+              maxTicksLimit: 10,
+              padding: 1,
+            },
           },
         },
 
@@ -188,10 +187,10 @@
     });
   }
 
-  getTripsCount("2015-10-13 00:00:00","2016-10-13 00:00:00","myChart")
+  getTripsCount("2015-10-13 00:00:00", "2016-10-13 00:00:00", "myChart");
 
-  function getTripsCount(inputStartDate,inputEndDate,canvasName){
-     axios
+  function getTripsCount(inputStartDate, inputEndDate, canvasName) {
+    axios
       .get("/trips", {
         params: {
           startDate: inputStartDate,
@@ -208,7 +207,9 @@
           data["values"].push(element["count"]);
         });
         console.log(data);
-        document.getElementById("test").innerHTML = `<canvas id="myChart" width="600" height="300"></canvas>`
+        document.getElementById(
+          "test"
+        ).innerHTML = `<canvas id="myChart" width="600" height="300"></canvas>`;
         createViewChart(canvasName, data);
       })
       .catch(function (error) {
@@ -218,7 +219,6 @@
       .then(function () {
         // always executed
       });
-
   }
 
   function HexToRGB(hex_color, trnsprnc) {
@@ -231,15 +231,44 @@
     return "rgb(" + r + "," + g + "," + b + "," + trnsprnc + ")";
   }
 
-
-  document.getElementById("date-btn").addEventListener("click", function() {
-    var start_date = document.getElementById("startDate").value
-    var end_date = document.getElementById("endDate").value
+  document.getElementById("date-btn").addEventListener("click", function () {
+    var start_date = document.getElementById("startDate").value;
+    var end_date = document.getElementById("endDate").value;
     const regex = /\d{4}-\d{2}-\d{2}/;
-    if(regex.test(start_date) && regex.test(end_date)){
-      getTripsCount(start_date.concat(" ","00:00:00"),end_date.concat(" ","00:00:00"),"myChart")
-    }else{
-      console.log("not good")
+    if (regex.test(start_date) && regex.test(end_date)) {
+      getTripsCount(
+        start_date.concat(" ", "00:00:00"),
+        end_date.concat(" ", "00:00:00"),
+        "myChart"
+      );
+    } else {
+      console.log("not good");
     }
-});
+  });
+
+  createStatsCard()
+  function createStatsCard() {
+    axios
+      .get("/stats")
+      .then(function (response) {
+        data = response['data']['TripDuration'][0]
+        console.log(data)
+        var statsCard = document.getElementById("statsCard");
+        var content = 
+        `
+            <h6>Avg : ${data['avg']}s</h6>
+            <h6>Minimum : ${data['min']}s</h6>
+            <h6>Maximum : ${data['max']}s</h6>
+            
+        
+        ` 
+        statsCard.innerHTML = content
+      
+      })
+      .catch(function (error) {
+        console.log(error);
+      })
+      .then(function () {
+      });
+  }
 </script>

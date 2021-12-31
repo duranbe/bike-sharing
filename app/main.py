@@ -48,7 +48,7 @@ async def get_trips_between(startDate: datetime, endDate: datetime):
              }
          },
         {"$group":
-        {
+         {
              "_id": {"$dateToString": {"format": "%Y-%m-%d", "date": "$starttime"}},
              "count": {"$sum": 1}
          }
@@ -60,5 +60,48 @@ async def get_trips_between(startDate: datetime, endDate: datetime):
          }
 
     ]).to_list(length=None)
+
+    return data
+
+
+@app.get("/hour")
+async def get_count_trip_hour():
+    data = await db['trips'].aggregate([
+        {"$group":
+         {
+             "_id": {"$dateToString": {"format": "%H", "date": "$starttime"}},
+             "count": {"$sum": 1}
+         }
+         },
+        {"$sort":
+            {
+                "_id": 1
+            }
+         }
+
+    ]).to_list(length=None)
+
+    return data
+
+
+@app.get("/stats")
+async def get_global_stats():
+    data = {}
+
+    data['TripDuration'] = await db['trips'].aggregate([
+        {"$group": {
+
+            "_id": None,
+            "max": {"$max": "$tripduration"},
+            "min": {"$min": "$tripduration"},
+            "avg": {"$avg": "$tripduration"}
+            }
+        },
+        {"$project": {
+            "max": {"$ceil":  "$max"},
+            "min": {"$ceil":  "$min"},
+            "avg": {"$ceil":  "$avg"},
+        }}
+        ]).to_list(length=None)
 
     return data
