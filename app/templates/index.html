@@ -188,6 +188,8 @@
     });
   }
 
+  getTripsCount("2015-10-13 00:00:00","2016-10-13 00:00:00","myChart")
+
   function getTripsCount(inputStartDate,inputEndDate,canvasName){
      axios
       .get("/trips", {

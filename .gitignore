@@ -130,3 +130,5 @@ dmypy.json
 
 data/
 upload_data.py
+
+*.ipynb
