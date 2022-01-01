@@ -117,3 +117,19 @@ async def get_global_stats():
     ]).to_list(length=None)
 
     return data
+
+@app.get("/members")
+async def get_most_start_stations():
+
+    data = await db['trips'].aggregate([
+        {"$group": 
+            { "_id" : "$usertype",
+              "count": {"$sum": 1}
+            }
+
+        }
+
+    ]).to_list(length=None)
+
+    return data
+

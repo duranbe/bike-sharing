@@ -38,7 +38,7 @@
 
     <div class="container mt-4">
       <div class="row justify-content-center">
-        <div class="col-7">
+        <div class="col-6">
           <div class="card shadow my-2 mx-2">
             <div class="card-body">
               <h3 class="card-title">Trips by day 📆</h3>
@@ -83,7 +83,7 @@
           </div>
         </div>
 
-        <div class="col-4">
+        <div class="col-3">
           <div class="row">
             <div class="card shadow my-2 mx-2">
               <div class="card-body">
@@ -101,7 +101,7 @@
           <div class="row">
             <div class="card shadow my-2 mx-2">
               <div class="card-body">
-                <h3 class="card-title">Average Rentals/Hour</h3>
+                <h3 class="card-title">Average Rentals per Hour</h3>
                 <div id="test2" class="mt-2">
                   <canvas id="myChart2" width="600" height="300"></canvas>
                 </div>
@@ -111,8 +111,21 @@
           </div>
         </div>
 
+        <div class="col-3">
+          <div class="card shadow my-2 mx-2">
+            <div class="card-body">
+              <h3 class="card-title">Users type </h3>
+              <div id="test3" class="mt-2">
+                <canvas id="myChart3" width="300" height="300"></canvas>
+              </div>
+              
+            </div>
+          </div>
+        </div>
+
        
       </div>
+
     </div>
   </body>
 </html>
@@ -200,6 +213,55 @@
         },
       },
     });
+  }
+
+  function createDoughnutChar(canva_name,data){
+    var ctx = document.getElementById(canva_name);
+    var myLineChart = new Chart(ctx, {
+      type: 'doughnut',
+      data: {
+        labels: data["labels"],
+        datasets: [
+          {
+            label: "Number of Trips",
+            data: data["values"],
+            backgroundColor: ["#90d890","#186048"],
+          },
+        ],
+      },
+      options: {},
+
+    });
+  }
+
+  getMemberData("myChart3")
+  function getMemberData(canvasName){
+    axios
+      .get("/members", {
+        
+      })
+      .then(function (response) {
+        var data = {
+          labels: [],
+          values: [],
+        };
+        response["data"].forEach((element) => {
+          data["labels"].push(element["_id"]);
+          data["values"].push(element["count"]);
+        });
+        console.log(data);
+        document.getElementById(
+          "test3"
+        ).innerHTML = `<canvas id="myChart3" width="600" height="300"></canvas>`;
+        createDoughnutChar(canvasName, data);
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(error);
+      })
+      .then(function () {
+        // always executed
+      });
   }
 
   getTripsCount("2015-10-13 00:00:00", "2016-10-13 00:00:00", "myChart");
