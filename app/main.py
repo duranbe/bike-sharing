@@ -69,10 +69,22 @@ async def get_count_trip_hour():
     data = await db['trips'].aggregate([
         {"$group":
          {
-             "_id": {"$dateToString": {"format": "%H", "date": "$starttime"}},
+             "_id": {"$dateToString": {"format": "%Y-%m-%d %H", "date": "$starttime"}},
              "count": {"$sum": 1}
          }
          },
+
+        {"$group":
+            {
+                "_id": {"$hour": {"$dateFromString": {"dateString": "$_id", "format": "%Y-%m-%d %H"}}},
+                "avg": {"$avg": "$count"}
+            }
+
+         },
+        {"$project": {
+            "avg": {"$ceil":  "$avg"},
+
+        }},
         {"$sort":
             {
                 "_id": 1
@@ -95,13 +107,13 @@ async def get_global_stats():
             "max": {"$max": "$tripduration"},
             "min": {"$min": "$tripduration"},
             "avg": {"$avg": "$tripduration"}
-            }
+        }
         },
         {"$project": {
             "max": {"$ceil":  "$max"},
             "min": {"$ceil":  "$min"},
             "avg": {"$ceil":  "$avg"},
         }}
-        ]).to_list(length=None)
+    ]).to_list(length=None)
 
     return data

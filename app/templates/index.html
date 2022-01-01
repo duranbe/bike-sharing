@@ -38,8 +38,8 @@
 
     <div class="container mt-4">
       <div class="row justify-content-center">
-        <div class="col-6">
-          <div class="card shadow">
+        <div class="col-7">
+          <div class="card shadow my-2 mx-2">
             <div class="card-body">
               <h3 class="card-title">Trips by day 📆</h3>
               <h6 class="card-subtitle mb-2 text-muted">Count of trips</h6>
@@ -84,19 +84,34 @@
         </div>
 
         <div class="col-4">
-          <div class="card shadow">
-            <div class="card-body">
-              <h3 class="card-title">Statistics ⏱</h3>
-              
-              <p class="card-text">
-                <div id="statsCard">
+          <div class="row">
+            <div class="card shadow my-2 mx-2">
+              <div class="card-body">
+                <h3 class="card-title">Statistics ⏱</h3>
+                
+                <p class="card-text">
+                  <div id="statsCard">
 
+                  </div>
+                </p>
+                
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="card shadow my-2 mx-2">
+              <div class="card-body">
+                <h3 class="card-title">Average Rentals/Hour</h3>
+                <div id="test2" class="mt-2">
+                  <canvas id="myChart2" width="600" height="300"></canvas>
                 </div>
-              </p>
-              
+                
+              </div>
             </div>
           </div>
         </div>
+
+       
       </div>
     </div>
   </body>
@@ -113,7 +128,7 @@
 </style>
 
 <script>
-  function createViewChart(canva_name, data) {
+  function createLineChart(canva_name, data) {
     var ctx = document.getElementById(canva_name);
     var color = "#4E9F3D";
     var myLineChart = new Chart(ctx, {
@@ -210,7 +225,7 @@
         document.getElementById(
           "test"
         ).innerHTML = `<canvas id="myChart" width="600" height="300"></canvas>`;
-        createViewChart(canvasName, data);
+        createLineChart(canvasName, data);
       })
       .catch(function (error) {
         // handle error
@@ -269,6 +284,35 @@
         console.log(error);
       })
       .then(function () {
+      });
+  }
+  getTripsCountHour("myChart2")
+  function getTripsCountHour(canvasName) {
+    axios
+      .get("/hour", {
+        
+      })
+      .then(function (response) {
+        var data = {
+          labels: [],
+          values: [],
+        };
+        response["data"].forEach((element) => {
+          data["labels"].push(element["_id"]);
+          data["values"].push(element["avg"]);
+        });
+        console.log(data);
+        document.getElementById(
+          "test2"
+        ).innerHTML = `<canvas id="myChart2" width="600" height="300"></canvas>`;
+        createLineChart(canvasName, data);
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(error);
+      })
+      .then(function () {
+        // always executed
       });
   }
 </script>
