@@ -90,3 +90,30 @@ function createDoughnutChar(canva_name, data) {
     options: {},
   });
 }
+
+
+function createBarChart(canva_name, data) {
+    var ctx = document.getElementById(canva_name);
+    var myBarChart = new Chart(ctx, {
+      type: "bar",
+      data: {
+        labels: data["labels"],
+        datasets: [
+          {
+            label: "Number of Trips",
+            data: data["values"],
+            backgroundColor: ["#d8f0c0"],
+    
+          },
+        ],
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      },
+    });
+  }
+  

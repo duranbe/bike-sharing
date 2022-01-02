@@ -159,3 +159,31 @@ async def get_most_start_stations():
     )
 
     return data
+
+
+@app.get("/month")
+async def get_count_trip_hour():
+    data = (
+        await db["trips"]
+        .aggregate(
+            [
+                {
+                    "$group": {
+                        "_id": {
+                            "$dateToString": {
+                                "format": "%Y-%m",
+                                "date": "$starttime",
+                            }
+                        },
+                        "count": {"$sum": 1},
+                    }
+                },
+                {"$sort": {"_id": 1}},
+                
+                
+            ]
+        )
+        .to_list(length=None)
+    )
+
+    return data

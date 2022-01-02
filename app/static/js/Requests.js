@@ -82,3 +82,30 @@ function getTripsCountHour(canvasName) {
       // always executed
     });
 }
+
+function getTripsMonth(canvasName) {
+    axios
+      .get("/month", {})
+      .then(function (response) {
+        var data = {
+          labels: [],
+          values: [],
+        };
+        response["data"].forEach((element) => {
+          data["labels"].push(element["_id"]);
+          data["values"].push(element["count"]);
+        });
+        document.getElementById(
+          "test4"
+        ).innerHTML = `<canvas id="${canvasName}" width="600" height="300"></canvas>`;
+        createBarChart(canvasName, data);
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(error);
+      })
+      .then(function () {
+        // always executed
+      });
+  }
+  
