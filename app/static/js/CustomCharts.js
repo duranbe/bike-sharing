@@ -1,6 +1,6 @@
-function createLineChart(canva_name, data, legend_label) {
+function createLineChart(canva_name, data, legend_label,line_color,line_tension) {
   var ctx = document.getElementById(canva_name);
-  var color = "#4E9F3D";
+  var color = line_color;
   var myLineChart = new Chart(ctx, {
     type: "line",
     data: {
@@ -9,7 +9,7 @@ function createLineChart(canva_name, data, legend_label) {
         {
           label: legend_label,
           data: data["values"],
-          lineTension: 0.2,
+          lineTension: line_tension,
           backgroundColor: HexToRGB(color, 0), //Area
           borderColor: color, //line
           borderWidth: 2.5,
@@ -20,6 +20,7 @@ function createLineChart(canva_name, data, legend_label) {
           pointHoverBackgroundColor: color,
           pointHoverBorderColor: color,
           pointHitRadius: 15,
+        
         },
       ],
     },

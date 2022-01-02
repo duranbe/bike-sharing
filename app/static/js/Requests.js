@@ -46,7 +46,7 @@ function getTripsCount(inputStartDate, inputEndDate, canvasName) {
       document.getElementById(
         "test"
       ).innerHTML = `<canvas id="myChart" width="600" height="300"></canvas>`;
-      createLineChart(canvasName, data, "Number of trips");
+      createLineChart(canvasName, data, "Number of trips","#4E9F3D",0.2);
     })
     .catch(function (error) {
       // handle error
@@ -72,7 +72,7 @@ function getTripsCountHour(canvasName) {
       document.getElementById(
         "test2"
       ).innerHTML = `<canvas id="myChart2" width="600" height="300"></canvas>`;
-      createLineChart(canvasName, data, "Number of rentals");
+      createLineChart(canvasName, data, "Number of 🚲 rentals","#189078",0);
     })
     .catch(function (error) {
       // handle error

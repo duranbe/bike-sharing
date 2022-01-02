@@ -39,7 +39,7 @@
       </div>
     </nav>
 
-    <div class="container mt-4">
+    <div class="container mt-4 ">
       <div class="row justify-content-center">
         <div class="col-6">
           <div class="card shadow my-2 mx-2">
@@ -91,7 +91,7 @@
             <div class="card shadow my-2 mx-2">
               <div class="card-body">
                 <h3 class="card-title">Statistics ⏱</h3>
-                
+                <h6 class="card-subtitle mb-2 text-muted">Trip duration stats</h6>
                 <p class="card-text">
                   <div id="statsCard">
 
@@ -104,7 +104,8 @@
           <div class="row">
             <div class="card shadow my-2 mx-2">
               <div class="card-body">
-                <h3 class="card-title">Average Rentals per Hour</h3>
+                <h3 class="card-title">Rentals per Hour</h3>
+                <h6 class="card-subtitle mb-2 text-muted">Average rentals</h6>
                 <div id="test2" class="mt-2">
                   <canvas id="myChart2" width="600" height="300"></canvas>
                 </div>
@@ -117,7 +118,7 @@
         <div class="col-3">
           <div class="card shadow my-2 mx-2">
             <div class="card-body">
-              <h3 class="card-title">Users type </h3>
+              <h3 class="card-title">Users type 💳</h3>
               <div id="test3" class="mt-2">
                 <canvas id="myChart3" width="300" height="300"></canvas>
               </div>
@@ -172,7 +173,7 @@
         var statsCard = document.getElementById("statsCard");
         var content = 
         `
-            <h6>Avg : ${data['avg']} minutes</h6>
+            <h6>Average  : ${data['avg']} minutes</h6>
             <h6>Minimum : ${data['min']} minutes</h6>
             <h6>Maximum : ${data['max']} minutes</h6>
         ` 
