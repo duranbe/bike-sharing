@@ -145,11 +145,7 @@
 
 <script>
   getMemberData("myChart3")
-  
-
   getTripsCount("2015-10-13 00:00:00", "2016-10-13 00:00:00", "myChart");
-
-  
 
   document.getElementById("date-btn").addEventListener("click", function () {
     var start_date = document.getElementById("startDate").value;
@@ -179,8 +175,6 @@
             <h6>Avg : ${data['avg']} minutes</h6>
             <h6>Minimum : ${data['min']} minutes</h6>
             <h6>Maximum : ${data['max']} minutes</h6>
-            
-        
         ` 
         statsCard.innerHTML = content
       
