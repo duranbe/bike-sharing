@@ -2,7 +2,9 @@
 Pronto Bike Sharing Dashboard
 
 ### Overview
-The project consist in a small one-page dashboard to analyze and predicts the cycle share trips of the Pronto Cycle Share system, that was operating between 2014 and 2016 in Seattle, USA. It was created for the DEV.TO and MongoDB atlashackathon
+The project consist in a small one-page dashboard to analyze and predicts the cycle share trips of the Pronto Cycle Share system, that was operating between 2014 and 2016 in Seattle, USA. 
+
+It was created for the DEV.TO and MongoDB atlashackathon
 
 This project was built with FastAPI, MongoDB, Docker, Bootstrap and Chartjs.
 
