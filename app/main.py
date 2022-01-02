@@ -125,6 +125,15 @@ async def get_global_stats():
                         "avg": {"$avg": "$tripduration"},
                     }
                 },
+                { 
+                    "$project": {
+                        
+                       "max": { "$divide": [ "$max", 60 ] },
+                       "min": { "$divide": [ "$min", 60 ] },
+                       "avg": { "$divide": [ "$avg", 60 ] },
+                    }
+
+                },
                 {
                     "$project": {
                         "max": {"$ceil": "$max"},
