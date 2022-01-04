@@ -92,7 +92,7 @@ function createDoughnutChar(canva_name, data) {
 }
 
 
-function createBarChart(canva_name, data) {
+function createBarChart(canva_name, data, legend_label) {
     var ctx = document.getElementById(canva_name);
     var myBarChart = new Chart(ctx, {
       type: "bar",
@@ -100,7 +100,7 @@ function createBarChart(canva_name, data) {
         labels: data["labels"],
         datasets: [
           {
-            label: "Number of Trips",
+            label: legend_label,
             data: data["values"],
             backgroundColor: ["#d8f0c0"],
     

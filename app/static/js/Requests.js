@@ -98,7 +98,7 @@ function getTripsMonth(canvasName) {
         document.getElementById(
           "test4"
         ).innerHTML = `<canvas id="${canvasName}" width="600" height="300"></canvas>`;
-        createBarChart(canvasName, data);
+        createBarChart(canvasName, data, "Montly Rentals");
       })
       .catch(function (error) {
         // handle error
