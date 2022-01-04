@@ -52,27 +52,28 @@
               </div>
               <div class="input-group mt-3">
                 <div class="row my-3">
-                  <div class="col-4">
+                  <div class="col-5">
                     <input
                       id="startDate"
-                      type="text"
+                      
+                      type="date"
                       class="form-control"
-                      placeholder="Start"
+                      value="2016-10-13"
                       aria-label="Username"
                       aria-describedby="basic-addon1"
                     />
                   </div>
-                  <div class="col-4">
+                  <div class="col-5">
                     <input
                       id="endDate"
-                      type="text"
+                      type="date"
                       class="form-control"
-                      placeholder="End"
+                      value="2015-11-13"
                       aria-label="Username"
                       aria-describedby="basic-addon1"
                     />
                   </div>
-                  <div class="col-3">
+                  <div class="col-2">
                     <button
                       class="btn btn-primary"
                       style="background-color: #189078; font-style: italic"
@@ -166,11 +167,12 @@
 <script>
   getMemberData("myChart3")
   getTripsMonth("myChart4")
-  getTripsCount("2015-10-13 00:00:00", "2016-10-13 00:00:00", "myChart");
+  getTripsCount("2015-10-13 00:00:00", "2016-11-13 00:00:00", "myChart");
 
   document.getElementById("date-btn").addEventListener("click", function () {
     var start_date = document.getElementById("startDate").value;
     var end_date = document.getElementById("endDate").value;
+    console.log(start_date,end_date)
     const regex = /\d{4}-\d{2}-\d{2}/;
     if (regex.test(start_date) && regex.test(end_date)) {
       getTripsCount(
