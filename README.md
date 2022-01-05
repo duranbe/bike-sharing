@@ -8,6 +8,8 @@ It was created for the DEV.TO and MongoDB atlashackathon
 
 This project was built with FastAPI, MongoDB, Docker, Bootstrap and Chartjs.
 
+![screen](https://github.com/duranbe/bike-sharing/blob/main/img/snapshot.PNG?raw=true)
+
 ### Setting up the project
 This project is built with Docker 🐋,
 
