@@ -98,7 +98,7 @@ function getTripsMonth(canvasName) {
         document.getElementById(
           "test4"
         ).innerHTML = `<canvas id="${canvasName}" width="600" height="300"></canvas>`;
-        createBarChart(canvasName, data, "Montly Rentals");
+        createBarChart(canvasName, data, "Montly Rentals","#d8f0c0");
       })
       .catch(function (error) {
         // handle error
@@ -109,3 +109,28 @@ function getTripsMonth(canvasName) {
       });
   }
   
+  function getTripsYear(canvasName) {
+    axios
+      .get("/year", {})
+      .then(function (response) {
+        var data = {
+          labels: [],
+          values: [],
+        };
+        response["data"].forEach((element) => {
+          data["labels"].push(element["_id"]);
+          data["values"].push(element["count"]);
+        });
+        document.getElementById(
+          "test5"
+        ).innerHTML = `<canvas id="${canvasName}" width="600" height="300"></canvas>`;
+        createBarChart(canvasName, data, "Montly Rentals","#90d890");
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(error);
+      })
+      .then(function () {
+        // always executed
+      });
+  }

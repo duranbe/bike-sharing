@@ -1,3 +1,5 @@
+
+
 function createLineChart(canva_name, data, legend_label,line_color,line_tension) {
   var ctx = document.getElementById(canva_name);
   var color = line_color;
@@ -92,7 +94,7 @@ function createDoughnutChar(canva_name, data) {
 }
 
 
-function createBarChart(canva_name, data, legend_label) {
+function createBarChart(canva_name, data, legend_label,bar_color) {
     var ctx = document.getElementById(canva_name);
     var myBarChart = new Chart(ctx, {
       type: "bar",
@@ -102,7 +104,7 @@ function createBarChart(canva_name, data, legend_label) {
           {
             label: legend_label,
             data: data["values"],
-            backgroundColor: ["#d8f0c0"],
+            backgroundColor: [bar_color],
     
           },
         ],

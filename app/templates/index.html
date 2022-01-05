@@ -137,6 +137,19 @@
               </div>
             </div>
           </div>
+          <div class="row">
+            <div class="card shadow my-2 mx-2">
+              <div class="card-body">
+                <h3 class="card-title">Trips per Hour</h3>
+                <h6 class="card-subtitle mb-2 text-muted">Average number of trips per hour of the day</h6>
+                <div id="test5" class="mt-2">
+                  <canvas id="myChart5" width="600" height="300"></canvas>
+                </div>
+                
+              </div>
+            </div>
+          </div>
+          
          
         </div>
 
@@ -192,6 +205,7 @@
   getTripsMonth("myChart4")
   getTripsCount("2015-10-13 00:00:00", "2016-10-13 00:00:00", "myChart");
   getTripsCountHour("myChart2")
+  getTripsYear("myChart5")
 
   document.getElementById("date-btn").addEventListener("click", function () {
     var start_date = document.getElementById("startDate").value;
