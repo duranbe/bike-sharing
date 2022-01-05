@@ -98,7 +98,7 @@ function getTripsMonth(canvasName) {
         document.getElementById(
           "test4"
         ).innerHTML = `<canvas id="${canvasName}" width="600" height="300"></canvas>`;
-        createBarChart(canvasName, data, "Montly Rentals","#d8f0c0");
+        createBarChart(canvasName, data, "Monthly Rentals","#d8f0c0");
       })
       .catch(function (error) {
         // handle error
@@ -124,7 +124,7 @@ function getTripsMonth(canvasName) {
         document.getElementById(
           "test5"
         ).innerHTML = `<canvas id="${canvasName}" width="600" height="300"></canvas>`;
-        createBarChart(canvasName, data, "Montly Rentals","#90d890");
+        createBarChart(canvasName, data, "Yearly Rentals","#90d890");
       })
       .catch(function (error) {
         // handle error
