@@ -42,52 +42,66 @@
 
     <div class="container-fluid mt-4 ">
       <div class="row justify-content-center">
+        
         <div class="col-5">
-          <div class="card shadow my-2 mx-2">
-            <div class="card-body">
-              <h3 class="card-title">Trips by day 📆</h3>
-              <h6 class="card-subtitle mb-2 text-muted">Count of trips</h6>
-              <div id="test" class="mt-2">
-                <canvas id="myChart" width="600" height="300"></canvas>
-              </div>
-              <div class="input-group mt-3">
-                <div class="row my-3">
-                  <div class="col-5">
-                    <input
-                      id="startDate"
-                      
-                      type="date"
-                      class="form-control"
-                      value="2015-10-13"
-                      aria-label="Username"
-                      aria-describedby="basic-addon1"
-                    />
-                  </div>
-                  <div class="col-5">
-                    <input
-                      id="endDate"
-                      type="date"
-                      class="form-control"
-                      value="2016-10-13"
-                      aria-label="Username"
-                      aria-describedby="basic-addon1"
-                    />
-                  </div>
-                  <div class="col-2">
-                    <button
-                      class="btn btn-primary"
-                      style="background-color: #189078; font-style: italic"
-                      id="date-btn"
-                    >
-                      Search
-                    </button>
+          <div class="row-12">
+            <div class="card shadow my-2 mx-2">
+              <div class="card-body">
+                <h3 class="card-title">Trips by day 📆</h3>
+                <h6 class="card-subtitle mb-2 text-muted">Count of trips for each day</h6>
+                <div id="test" class="mt-2">
+                  <canvas id="myChart" width="600" height="300"></canvas>
+                </div>
+                <div class="input-group mt-3">
+                  <div class="row my-3">
+                    <div class="col-5">
+                      <input
+                        id="startDate"
+                        
+                        type="date"
+                        class="form-control"
+                        value="2015-10-13"
+                        aria-label="Username"
+                        aria-describedby="basic-addon1"
+                      />
+                    </div>
+                    <div class="col-5">
+                      <input
+                        id="endDate"
+                        type="date"
+                        class="form-control"
+                        value="2016-10-13"
+                        aria-label="Username"
+                        aria-describedby="basic-addon1"
+                      />
+                    </div>
+                    <div class="col-2">
+                      <button
+                        class="btn btn-primary"
+                        style="background-color: #189078; font-style: italic"
+                        id="date-btn"
+                      >
+                        Search
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+          <div class="row-12 my-1">
+            <div class="card shadow my-2 mx-2">
+              <div class="card-body">
+                <h3 class="card-title">Most Popular Trips</h3>
+                <h6 class="card-subtitle mb-2 text-muted">No</h6>
+                <p class="card-text">
+                  <div id="statsStationCard"></div>
+                </p>
+                
+              </div>
+            </div>
+          </div>
         </div>
-
         <div class="col-3">
           <div class="row">
             <div class="card shadow my-2 mx-2">
@@ -95,9 +109,7 @@
                 <h3 class="card-title">Statistics ⏱</h3>
                 <h6 class="card-subtitle mb-2 text-muted">Trip duration stats</h6>
                 <p class="card-text">
-                  <div id="statsCard">
-
-                  </div>
+                  <div id="statsCard"></div>
                 </p>
                 
               </div>
@@ -107,7 +119,7 @@
             <div class="card shadow my-2 mx-2">
               <div class="card-body">
                 <h3 class="card-title">Trips per Hour</h3>
-                <h6 class="card-subtitle mb-2 text-muted">On average</h6>
+                <h6 class="card-subtitle mb-2 text-muted">Average number of trips per hour of the day</h6>
                 <div id="test2" class="mt-2">
                   <canvas id="myChart2" width="600" height="300"></canvas>
                 </div>
@@ -135,8 +147,8 @@
           <div class="row mx-1">
             <div class="card shadow my-2 mx-2">
               <div class="card-body">
-                <h3 class="card-title">Montly Rentals Count</h3>
-                <h6 class="card-subtitle mb-2 text-muted"></h6>
+                <h3 class="card-title">Monthly Trips Count</h3>
+                <h6 class="card-subtitle mb-2 text-muted">Total number of trips per month and year</h6>
                 <div id="test4" class="mt-2">
                   <canvas id="myChart4" width="600" height="auto"></canvas>
                 </div>
@@ -145,6 +157,7 @@
             </div>
           </div>
         </div>
+      
 
        
       </div>
@@ -168,6 +181,7 @@
   getMemberData("myChart3")
   getTripsMonth("myChart4")
   getTripsCount("2015-10-13 00:00:00", "2016-10-13 00:00:00", "myChart");
+  getTripsCountHour("myChart2")
 
   document.getElementById("date-btn").addEventListener("click", function () {
     var start_date = document.getElementById("startDate").value;
@@ -191,7 +205,6 @@
       .get("/stats")
       .then(function (response) {
         data = response['data']['TripDuration'][0]
-        console.log(data)
         var statsCard = document.getElementById("statsCard");
         var content = 
         `
@@ -208,6 +221,24 @@
       .then(function () {
       });
   }
-  getTripsCountHour("myChart2")
+
+  createStatsStationCard()
+  function createStatsStationCard() {
+    axios
+      .get("/popular")
+      .then(function (response) {
+        data = response['data']
+        console.log(data)
+      
+      
+      })
+      .catch(function (error) {
+        console.log(error);
+      })
+      .then(function () {
+      });
+  }
+
+  
   
 </script>
