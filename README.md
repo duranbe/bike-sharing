@@ -6,6 +6,8 @@ The project consist in a small one-page dashboard to analyze and predicts the cy
 
 It was created for the DEV.TO and MongoDB atlashackathon
 
+Dev post : https://dev.to/duranbe/explore-and-predict-seattle-city-bikes-trips-cac
+
 This project was built with FastAPI, MongoDB, Docker, Bootstrap and Chartjs.
 
 ![screen](https://github.com/duranbe/bike-sharing/blob/main/img/snapshot.PNG?raw=true)
